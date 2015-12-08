@@ -49,7 +49,7 @@ GLOBAL OPTIONS:
 
 `--skip-tls-verify`:Skip TLS certificate verification when you have a self-signed certificate.
 
-TODO
+TODOs & Ideas
 ----
 - [ ] Token-based authentication
 - [ ] TLS certificate authentication
