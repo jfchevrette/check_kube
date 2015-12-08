@@ -49,6 +49,14 @@ GLOBAL OPTIONS:
 
 `--skip-tls-verify`:Skip TLS certificate verification when you have a self-signed certificate.
 
+TODO
+----
+- [ ] Token-based authentication
+- [ ] TLS certificate authentication
+- [ ] Implement pod status checking
+- [ ] Implement replicationController status checking
+- [ ] Implement service status checking
+
 Contributions
 -------------
 Contributions are more than welcome. Bug reports with specific reproduction
