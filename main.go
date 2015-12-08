@@ -14,7 +14,7 @@ import (
 )
 
 const (
-	appVersion = "0.1.0"
+	appVersion = "0.1.1"
 
 	// Nagios status codes
 	nagiosStatusOK       = 0
@@ -74,6 +74,7 @@ func checkKubeNodes(c *cli.Context) {
 func main() {
 	app := cli.NewApp()
 	app.Name = "check_kube_nodes"
+	app.HelpName = app.Name
 	app.Usage = "Nagios check to verify Kubernetes resources status"
 	app.Version = appVersion
 
