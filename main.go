@@ -74,7 +74,7 @@ func checkKubeNodes(c *cli.Context) {
 func main() {
 	app := cli.NewApp()
 	app.Name = "check_kube_nodes"
-	app.Usage = "Nagios check to verify Kubernetes nodes status"
+	app.Usage = "Nagios check to verify Kubernetes resources status"
 	app.Version = appVersion
 
 	app.Flags = []cli.Flag{
