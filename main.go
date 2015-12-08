@@ -14,7 +14,7 @@ import (
 )
 
 const (
-	appVersion = "0.0.1"
+	appVersion = "0.1.0"
 
 	// Nagios status codes
 	nagiosStatusOK       = 0
