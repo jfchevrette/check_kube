@@ -71,6 +71,49 @@ func checkKubeNodes(c *cli.Context) {
 	os.Exit(nagiosStatusOK)
 }
 
+func checkKubePods(c *cli.Context) {
+	var err error
+	var statusCode = nagiosStatusOK
+	var statusLine []string
+	var notReadyCount int
+
+	kubeClient, err := client.New(kubeConfig)
+	if err != nil {
+		fmt.Printf("CRITICAL: %s\n", err)
+		os.Exit(nagiosStatusUnknown)
+	}
+
+	// TODO: Allow for selecting pods based on labels or fields
+	pods, err := kubeClient.Pods("").List(labels.Everything(), fields.Everything())
+	if err != nil {
+		fmt.Printf("CRITICAL: %s\n", err)
+		os.Exit(nagiosStatusUnknown)
+	}
+
+	// Loop over all the pods
+	for _, pod := range pods.Items {
+		for _, cond := range pod.Status.Conditions {
+			if cond.Type == "Ready" && cond.Status != "True" {
+				notReadyCount++
+			}
+		}
+	}
+
+	if notReadyCount != 0 {
+		msg := fmt.Sprintf("%d pods not in READY status.", notReadyCount)
+		statusLine = append(statusLine, msg)
+		statusCode = nagiosStatusCritical
+	}
+
+	if statusCode != nagiosStatusOK {
+		fmt.Println(strings.Join(statusLine, "\n"))
+		os.Exit(statusCode)
+	}
+
+	fmt.Println("OK")
+	os.Exit(nagiosStatusOK)
+}
+
 func main() {
 	app := cli.NewApp()
 	app.Name = "check_kube_nodes"
@@ -111,6 +154,14 @@ func main() {
 			Usage:   "check node status",
 			Action: func(c *cli.Context) {
 				checkKubeNodes(c)
+			},
+		},
+		cli.Command{
+			Name:    "pod",
+			Aliases: []string{"p"},
+			Usage:   "check pod status",
+			Action: func(c *cli.Context) {
+				checkKubePods(c)
 			},
 		},
 	}

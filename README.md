@@ -30,6 +30,7 @@ VERSION:
 
 COMMANDS:
    node, n	check node status
+   pod,  p	check pod  status
    help, h	Shows a list of commands or help for one command
 
 GLOBAL OPTIONS:
